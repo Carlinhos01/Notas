@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Rotas from '';
+import Rotas from './paginas/Rotas';
 
 export default function App() {
   return (
