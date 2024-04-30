@@ -7,14 +7,16 @@ import {
   TouchableOpacity,
   Alert
 } from 'react-native';
-//import Firebase from '../Firebase';
+
+import firestore from "../Firebase";
+
 
 export default function CadNotas({navigation}) {
   const [titulo, setTitulo] = useState(null);
   const [texto, setTexto] = useState(null);
 
-  function addNotas() {
-    Firebase.collection('Notas').add({
+  async function addNotas() {
+    const docRef = await addDoc(collection(firestore, 'Notas'), {
       titulo: titulo,
       texto: texto,
     });

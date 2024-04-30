@@ -1,49 +1,37 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, FlatList,TouchableOpacity,Alert} from 'react-native';
-//import Firebase from '../Firebase';
-import firestore from '../Firebase';
+import { firestore } from "../Firebase"; 
+import { collection, onSnapshot, deleteDoc, doc } from "firebase/firestore"; 
+
 
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 
+
 export default function Home({navigation}){
 
-const [Notas, setDiario] = useState([]);
+const [Notas, setNotas] = useState([]);
 
-function deleteNotas(id){
-  
-  Firebase.collection("Notas").doc(id).delete();
 
-  Alert.alert("A Nota foi Deletada.");
+async function deleteNotas(id){
+  try{
+    await deleteDoc(doc(firebase, "Notas", id));
+    Alert.alert("A Nota foi deletada");
+  }catch(error){
+    console.error("Erro ao deletar", error);
+  }
 }
 
-// useEffect(()=>{
-//   Firebase.collection("Notas").onSnapshot((query)=>{
-//     const lista=[];
-//     query.forEach((doc) =>{
-//       lista.push({...doc.data(),id: doc.id});
-//     });
-//   setDiario(lista);
-//   });
-// },[]);
-
-useEffect(() => {
-  try {
-    const unsubscribe = firestore.collection("Notas").onSnapshot((querySnapshot) => {
-      const lista = [];
-      querySnapshot.forEach((doc) => {
-        lista.push({ ...doc.data(), id: doc.id });
-      });
-      setDiario(lista);
-    });
-
-    return () => {
-      unsubscribe();
-    };
-  } catch (error) {
-    console.error("Erro ao consultar a coleção:", error);
-  }
-}, []);
+useEffect(()=>{
+  const unsubscribe = onSnapshot(collection(firestore,"Notas"),(querySnapshot) =>{
+    const lista=[];
+    querySnapshot.forEach((doc)=>{
+      lista.push({...doc.data(),id: doc.id });
+    })
+    setNotas(lista);
+  });
+    return () => unsubscribe();
+  },[]);
 
 
   return(

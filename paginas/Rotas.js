@@ -19,13 +19,13 @@ export default function Rotas(){
                 />
 
                 <Stack.Screen 
-                    name="Criar Nota"
+                    name="cadNota"
                     component={cadNota}
                     options={{headerTintColor: '#9ac234', title:'Criar Nota'}}
                 />
 
                 <Stack.Screen 
-                    name="Alterar Nota"
+                    name="altNota"
                     component={altNota}
                     options={{headerTintColor: '#9ac234', title:'Criar Nota'}}
                 />

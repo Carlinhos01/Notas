@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {View, Text, StyleSheet,TextInput,TouchableOpacity,Alert} from 'react-native';
-import Firebase from '../Firebase';
 
+import firestore from '../Firebase';
 export default function AlterarDiario({navigation,route}){
 
 const id = route.params.id;
@@ -11,14 +11,19 @@ const [titulo, setTitulo] = useState(route.params.titulo);
 const [texto, setTexto] = useState(route.params.texto);
 
 
-function alterarDiario(id,titulo,texto,data,local){
-  Firebase.collection("diario").doc(id).update({
+function altNota(id,titulo,texto){
+  try {
+    await updateDoc(doc(collection(firestore, "Notas"), id), {
     titulo: titulo,
     texto: texto,
 
   })
   Alert.alert("Aviso", "Diário Alterado com sucesso.")
   navigation.navigate("Home")
+}
+catch (error) {
+    console.error("Erro ao alterar: ", error);
+    Alert.alert("Erro", "Erro ao alterar. Por favor, tente novamente.");
 }
 
   return(
