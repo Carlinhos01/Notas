@@ -15,7 +15,7 @@ const [Notas, setNotas] = useState([]);
 
 async function deleteNotas(id){
   try{
-    await deleteDoc(doc(firebase, "Notas", id));
+    await deleteDoc(doc(firestore, "Notas", id));
     Alert.alert("A Nota foi deletada");
   }catch(error){
     console.error("Erro ao deletar", error);

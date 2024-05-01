@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import {View, Text, StyleSheet,TextInput,TouchableOpacity,Alert} from 'react-native';
-
-import firestore from '../Firebase';
+import { collection, doc, updateDoc } from "firebase/firestore";
+import {firestore} from '../Firebase';
 export default function AlterarDiario({navigation,route}){
 
 const id = route.params.id;
@@ -11,7 +11,7 @@ const [titulo, setTitulo] = useState(route.params.titulo);
 const [texto, setTexto] = useState(route.params.texto);
 
 
-function altNota(id,titulo,texto){
+ async function altNota(id,titulo,texto){
   try {
     await updateDoc(doc(collection(firestore, "Notas"), id), {
     titulo: titulo,
@@ -25,6 +25,7 @@ catch (error) {
     console.error("Erro ao alterar: ", error);
     Alert.alert("Erro", "Erro ao alterar. Por favor, tente novamente.");
 }
+}
 
   return(
 <View style={estilo.container}>
@@ -37,7 +38,7 @@ catch (error) {
       <TouchableOpacity
         style={estilo.btnenviar}
         onPress={() => {
-          alterarDiario(id,titulo,texto);
+          altNota(id,titulo,texto);
         }}>
         <Text style={estilo.btntxtenviar}> Alterar </Text>
       </TouchableOpacity>

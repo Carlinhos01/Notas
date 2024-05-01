@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Alert
-} from 'react-native';
-
-import firestore from "../Firebase";
+import {View,Text,TextInput,StyleSheet,TouchableOpacity,Alert} from 'react-native';
+import { collection, addDoc } from "firebase/firestore";
+import {firestore} from "../Firebase";
 
 
 export default function CadNotas({navigation}) {
@@ -16,14 +9,20 @@ export default function CadNotas({navigation}) {
   const [texto, setTexto] = useState(null);
 
   async function addNotas() {
-    const docRef = await addDoc(collection(firestore, 'Notas'), {
+    try{
+    const docRef = await addDoc(collection(firestore,"Notas"), {
       titulo: titulo,
-      texto: texto,
+      texto: texto
     });
-    setTitulo({titulo:''})
-    setTexto({texto: ''})
+    console.log("Cadastrado com ID: ", docRef.id);
+     Alert.alert("Nota Criada com Sucesso")
+     navigation.navigate("Home");
+  }catch (error){
+    console.error("Erro ao cadastrar: ", error);
+    Alert.alert("Erro", "Erro ao cadastrar . Por favor, tente novamente.");
+  }
   Alert.alert("Cadastro", "Registros cadastrados com sucesso")
-navigation.navigate("Home")
+   navigation.navigate("Home")
   }
 
   return (
