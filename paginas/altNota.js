@@ -13,7 +13,7 @@ const [texto, setTexto] = useState(route.params.texto);
 
  async function altNota(id,titulo,texto){
   try {
-    await updateDoc(doc(collection(firestore, "Notas"), id), {
+    await updateDoc(doc(collection(firestore,"Notas"), id), {
     titulo: titulo,
     texto: texto,
 

@@ -27,11 +27,13 @@ export default function CadNotas({navigation}) {
 
   return (
     <View style={estilo.container}>
-      <View>
-        <Text style={estilo.titulo}> Registre no Seu Bloco de Notas</Text>
+      
+      <View style={estilo.caixa}>
+      <TextInput autoCapitalize = 'words' style={estilo.input} placeholder="Título:" onChangeText={setTitulo} value={titulo}/>
+      <TextInput style={estilo.input} placeholder="Nota:" onChangeText={setTexto} value={texto}/>
       </View>
-      <TextInput autoCapitalize = 'words' style={estilo.input} placeholder="Digite o Título" onChangeText={setTitulo} value={titulo}/>
-      <TextInput style={estilo.input} placeholder="Digite o seu lindo dia" onChangeText={setTexto} value={texto}/>
+
+      <View style={estilo.botao}>
       <TouchableOpacity
         style={estilo.btnenviar}
         onPress={() => {
@@ -39,6 +41,7 @@ export default function CadNotas({navigation}) {
         }}>
         <Text style={estilo.btntxtenviar}> Enviar </Text>
       </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -48,18 +51,31 @@ const estilo = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#11492e',
   },
   input: {
     marginVertical: 10,
     marginHorizontal: 10,
-    backgroundColor: '#9ac234',
+    backgroundColor: '#fffaf4',
     paddingHorizontal: 20,
     paddingVertical: 10,
     fontSize: 15,
+    borderRadius: 100,
+    width: 200,
+  },
+  caixa:{
+    backgroundColor: '#371513',
     borderRadius: 10,
+    height: 250,
+    width: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   btnenviar: {
     marginTop: 20,
+    backgroundColor: '#371513',
+    borderRadius: 10,
+    padding:5,
   },
   btntxtenviar: {
     fontSize: 25,
